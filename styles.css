@@ -1,0 +1,174 @@
+:root{
+  --bg: #fffaf6;
+  --card: #ffffff;
+  --accent-1: #f6b1c3; /* soft pink */
+  --accent-2: #ffd9a6; /* peach */
+  --accent-3: #c9f4d3; /* mint */
+  --accent-4: #d3e5ff; /* baby blue */
+  --muted: #6b6b6b;
+  --panel-border: rgba(100,100,100,0.06);
+  --shadow: 0 10px 30px rgba(28,30,38,0.06);
+}
+html,body,#app{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+body{background:linear-gradient(180deg,var(--bg),#fbfbff);display:flex;align-items:stretch;justify-content:center;padding:12px;}
+/* app container */
+#app{width:100%;max-width:920px;background:linear-gradient(180deg,#fff,#fff);box-shadow:var(--shadow);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:100vh;position:relative;border:1px solid var(--panel-border);}
+#topbar{display:flex;flex-direction:column;align-items:flex-start;padding:12px;gap:10px;background:linear-gradient(90deg,rgba(246,177,195,0.06),rgba(211,229,255,0.03));border-bottom:1px solid rgba(0,0,0,0.03);}
+#topbar select, #topbar button{height:44px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:linear-gradient(180deg,#fff,#fbfbff);padding:0 12px;font-weight:600;color:#222;box-shadow:0 2px 6px rgba(10,10,10,0.02);}
+
+/* subtle neon green outline for depth on topbar controls */
+#topbar button,
+#topbar select{
+  border: 2px solid rgba(0,120,40,0.24);
+  box-shadow:
+    0 2px 6px rgba(10,10,10,0.02),
+    0 6px 18px rgba(0,120,40,0.12); /* stronger green halo */
+  transition: box-shadow 180ms ease, transform 120ms ease;
+}
+#topbar button:hover,
+#topbar select:focus{
+  box-shadow:
+    0 4px 14px rgba(10,10,10,0.04),
+    0 10px 30px rgba(57,255,20,0.12); /* stronger green glow on hover/focus */
+  transform: translateY(-1px);
+}
+#topbar select{min-width:220px}
+#topbar button{background:linear-gradient(90deg,var(--accent-3),var(--accent-4));color:#10325b;border:0;box-shadow:0 6px 18px rgba(16,50,91,0.06);font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:6px 10px}
+
+/* ensure icon buttons keep the neon outline while preserving their own styling */
+#topbar button[title]{
+  border: 2px solid rgba(0,120,40,0.28);
+  box-shadow:
+    0 8px 22px rgba(16,50,91,0.06),
+    0 8px 28px rgba(0,120,40,0.10);
+}
+#topbar button[title]:hover{
+  box-shadow:
+    0 10px 30px rgba(16,50,91,0.08),
+    0 12px 44px rgba(0,120,40,0.22);
+}
+#topbar button .icon{width:22px;height:22px;display:block}
+
+/* Agrandar botones específicos para dominio/rango/conectar/limpiar/generar */
+#addDomain, #addRange, #connect, #clear, #generate {
+  height:54px;
+  width:54px;
+  padding:0;
+  border-radius:12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 22px rgba(16,50,91,0.06);
+  border: 2px solid rgba(0,120,40,0.28); /* stronger neon green rim */
+  transition: box-shadow 180ms ease, transform 120ms ease;
+}
+#addDomain:hover, #addRange:hover, #connect:hover, #clear:hover, #generate:hover{
+  box-shadow:
+    0 12px 34px rgba(16,50,91,0.08),
+    0 14px 48px rgba(0,120,40,0.22);
+  transform: translateY(-2px);
+}
+/* aumentar tamaño de los iconos dentro de esos botones */
+#addDomain .icon, #addRange .icon, #connect .icon, #clear .icon, #generate .icon {
+  width:28px;
+  height:28px;
+  display:block;
+}
+#topbar button[title]{padding:6px} /* keep compact when icons only */
+
+/* smaller inputs for adding domain/range in ordered-pairs area (slightly reduced) */
+#orderedTop input#pairA,
+#orderedTop input#pairB{
+  width:56px !important;
+  height:30px;
+  padding:0 6px;
+  font-size:12px;
+  border-radius:8px;
+}
+
+/* make the add-pair buttons slightly more compact to fit new inputs */
+#orderedTop button{
+  height:30px;
+  padding:0 6px;
+  font-size:12px;
+  border-radius:8px;
+}
+#controls{display:flex;flex-wrap:wrap;gap:32px;align-items:center;width:100%;margin:0;padding-top:4px;}
+/* workspace */
+#workspace{display:flex;flex:1;gap:0;padding:12px 12px 96px 12px;align-items:stretch;}
+#canvas{flex:1;border-radius:12px;border:1px solid rgba(16,50,91,0.06);background:linear-gradient(180deg,#fffefa,#f9fdff);touch-action:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);}
+#side{display:none !important;width:0;margin:0;padding:0;gap:0;}
+.panel{padding:10px;border-radius:12px;border:1px solid var(--panel-border);flex:0 0 auto;max-height:44vh;overflow:auto;box-shadow:0 6px 18px rgba(13,18,30,0.03);}
+/* default neutral fallback */
+.panel{background:linear-gradient(180deg,#ffffff,#fffaf8);}
+
+/* give each side panel a distinct pleasant pastel gradient */
+#side .panel:nth-child(1){ background: linear-gradient(180deg, rgba(246,177,195,0.18), rgba(255,244,248,0.5)); }
+#side .panel:nth-child(2){ background: linear-gradient(180deg, rgba(255,217,166,0.18), rgba(255,250,240,0.5)); }
+#side .panel:nth-child(3){ background: linear-gradient(180deg, rgba(201,244,211,0.18), rgba(245,255,250,0.5)); }
+
+/* slightly tinted panels in workspace/footer for cohesion */
+#topbar{ background: linear-gradient(90deg, rgba(246,177,195,0.04), rgba(211,229,255,0.03)); }
+#footer{ background: linear-gradient(90deg, rgba(211,229,255,0.04), rgba(255,244,240,0.02)); }
+
+.panel h4{margin:0 0 8px 0;font-size:13px;color:var(--muted);font-weight:600}
+ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+li.item{background:linear-gradient(90deg,rgba(255,249,240,0.6),rgba(249,249,255,0.6));padding:6px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#222;border:1px solid rgba(0,0,0,0.03)}
+li.item.range{background:linear-gradient(90deg,rgba(243,255,249,0.6),rgba(243,249,255,0.6))}
+li.item button{margin-left:6px;height:34px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#5a1f2b;padding:0 8px;cursor:pointer;font-weight:700}
+
+/* small neon outline for list action buttons */
+li.item button{
+  border: 2px solid rgba(0,120,40,0.22);
+  box-shadow: 0 6px 14px rgba(0,120,40,0.08);
+}
+li.item button:hover{
+  box-shadow: 0 10px 28px rgba(0,120,40,0.20);
+  transform: translateY(-1px);
+}
+/* footer */
+#footer{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(0,0,0,0.03);background:linear-gradient(90deg,#fff,#fffaf6);align-items:center;position:absolute;left:16px;right:16px;bottom:16px;border-radius:12px;box-shadow:0 14px 40px rgba(20,28,50,0.06);z-index:20;}
+#footer input{flex:1;height:36px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);padding:0 12px;background:linear-gradient(180deg,#fff,#fff);font-size:14px}
+#footer button, #footer select{
+  height:36px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:linear-gradient(90deg,var(--accent-4),var(--accent-3));
+  color:#07264a;
+  font-weight:700;
+  padding:0 12px;
+  border: 2px solid rgba(0,120,40,0.22);
+  box-shadow:
+    0 6px 18px rgba(16,50,91,0.06),
+    0 8px 26px rgba(0,120,40,0.08);
+  transition: box-shadow 180ms ease, transform 120ms ease;
+}
+#footer button:hover, #footer select:focus{
+  box-shadow:
+    0 10px 30px rgba(16,50,91,0.08),
+    0 14px 44px rgba(0,120,40,0.20);
+  transform: translateY(-1px);
+}
+
+/* hide native dropdown arrow on the select in the footer to remove the small arrow button */
+#footer select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+  padding-right: 12px; /* ensure text doesn't collide where the arrow was */
+}
+#props{font-size:14px;color:var(--muted);line-height:1.5;white-space:pre-line}
+@media (max-width:640px){
+  #app{border-radius:0;height:100vh;padding:0;}
+  #side{display:none}
+  #topbar select{flex:1}
+  /* tighten vertical spacing in the topbar */
+  #topbar{gap:6px}
+  /* reduce spacing between control groups so first four buttons sit closer to the two below */
+  #controls{gap:12px;align-items:center;}
+  /* slight negative margin on icon rows to compact their vertical rhythm a bit more */
+  #topbar button[title]{margin-bottom:4px;}
+  /* on small screens make footer span nearly full width and stay visible */
+  #footer{left:10px;right:10px;bottom:10px;padding:10px;}
+}
